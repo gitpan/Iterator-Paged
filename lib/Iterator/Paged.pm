@@ -4,7 +4,7 @@ package Iterator::Paged;
 use strict;
 use warnings 'all';
 
-our $VERSION = '0.002';
+our $VERSION = '0.003';
 
 
 #==============================================================================
@@ -40,7 +40,8 @@ sub next
     # End of the current resultset, see if we can get another page of records:
     if( my $page = $s->next_page )
     {
-      push @{ $s->{data} }, @$page;
+      $s->{data} = $page;
+      $s->{idx} = 0;
       return $s->{data}->[ $s->{idx}++ ];
     }
     else
@@ -59,13 +60,6 @@ sub reset
   
   $s->{idx} = 0;
 }# end next()
-
-
-#==============================================================================
-sub first
-{
-  shift->{data}->[0];
-}# end first()
 
 
 #==============================================================================
@@ -154,6 +148,36 @@ fetch the next "page" of results when the current set is exhausted.
 For example, suppose you have an iterator for results on Google.com that fetches
 the first page of results and upon the next call to C<next> fetches the second page,
 then third page, fourth and so on.
+
+=head1 PUBLIC PROPERTIES
+
+=head2 next
+
+Returns the next record.
+
+=head2 page_number
+
+Gets the current page number the iterator is on.
+
+=head1 PUBLIC METHODS
+
+=head2 reset
+
+Sets the page number and internal index to C<0>.
+
+=head1 ABSTRACT METHODS
+
+The following methods should be implemented by subclasses of Iterator::Paged.
+
+=head2 next_page( )
+
+This method should somehow fetch the next "page" of records and upon success,
+return an arrayref of records.
+
+If no more records are available, the method should return C<undef> like so:
+
+  # No records found:
+  return;
 
 =head1 AUTHOR
 
