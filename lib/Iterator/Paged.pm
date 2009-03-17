@@ -3,9 +3,8 @@ package Iterator::Paged;
 
 use strict;
 use warnings 'all';
-use Carp 'confess';
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 
 
 #==============================================================================

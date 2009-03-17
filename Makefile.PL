@@ -8,6 +8,7 @@ perl_version '5.008001';
 license 'perl';
 all_from 'lib/Iterator/Paged.pm';
 
+test_requires 'LWP::UserAgent';
 test_requires 'Test::More'  => '0.77';
 
 tests_recursive();
