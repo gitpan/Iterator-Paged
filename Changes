@@ -1,5 +1,9 @@
 Revision history for Perl extension Iterator::Paged.
 
+1.001   2009-08-17
+  - Added _init() method for instance initialization.
+  - This module is stable and ready for production use - hence the 1.0+ version.
+
 0.003   2009-03-17
   - Added POD.
   - Updated method next() to be capable of working with an infinite set of pages,

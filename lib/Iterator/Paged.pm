@@ -4,7 +4,7 @@ package Iterator::Paged;
 use strict;
 use warnings 'all';
 
-our $VERSION = '0.003';
+our $VERSION = '1.001';
 
 
 #==============================================================================
@@ -12,13 +12,17 @@ sub new
 {
   my ($class, %args) = @_;
   
-  return bless {
+  my $s = bless {
     data        => [ ],
     page_number => 0,
     idx         => 0,
     %args,
   }, $class;
+  $s->_init;
+  return $s;
 }# end new()
+
+sub _init { }
 
 
 #==============================================================================
@@ -178,6 +182,15 @@ If no more records are available, the method should return C<undef> like so:
 
   # No records found:
   return;
+
+=head1 PROTECTED METHODS
+
+The following methods I<may> be implemented by subclasses of Iterator::Paged.
+
+=head2 _init( )
+
+If your iterator class should be initialized after C<new> and before C<next_page>,
+use C<_init> for that purpose.
 
 =head1 AUTHOR
 
